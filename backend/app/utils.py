@@ -72,8 +72,7 @@ def prepare_text_for_analysis(raw_input: str) -> str:
     Convenience function for complete text preparation
     Combines sanitization and returns clean text
     """
-    sanitizer = ContentSanitizer()
-    clean_text = sanitizer.purify_content(raw_input)
+    clean_text = ContentSanitizer.purify_content(raw_input)
     return clean_text
 
 
@@ -82,5 +81,4 @@ def validate_input_text(text_content: str) -> Tuple[bool, str]:
     Convenience function for validation
     Wraps validator class for easier usage
     """
-    validator = ContentValidator()
-    return validator.assess_content_quality(text_content)
+    return ContentValidator.assess_content_quality(text_content)

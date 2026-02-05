@@ -86,7 +86,7 @@ async def root_endpoint():
     }
 
 
-@api_service.get("/health", response_model=Dict[str, str])
+@api_service.get("/health", response_model=Dict[str, Any])
 async def health_check_endpoint():
     """
     Health monitoring endpoint
@@ -110,7 +110,7 @@ async def health_check_endpoint():
     
     return {
         "status": "healthy",
-        "models_loaded": "true",
+        "models_loaded": True,
         "message": "All systems operational"
     }
 
