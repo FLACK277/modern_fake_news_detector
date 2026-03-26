@@ -28,7 +28,7 @@ fake-news-detector/
 ## Backend API
 
 - Framework: FastAPI
-- Endpoint: `POST /predict`
+- Endpoint: `POST /predict` (also available as `POST /api/predict` for Vercel/API gateway routing)
 - Input:
 
 ```json
@@ -98,3 +98,15 @@ npm start
 ```
 
 If running frontend locally in dev mode, set `REACT_APP_API_BASE=http://localhost:8000`.
+
+## Vercel Deployment
+
+This repo includes `vercel.json` in `fake-news-detector/` so the project can be deployed as:
+- Static frontend build from `frontend/`
+- Python API function from `backend/app.py`
+
+### Routes
+- `POST /api/predict` → backend ML inference (`FakeNewsModel.predict`)
+- `GET /api/health` → backend health endpoint
+
+The frontend already calls `/api/predict`, so deployed requests use the trained model output returned by the backend API.
