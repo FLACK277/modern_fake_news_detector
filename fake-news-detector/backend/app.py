@@ -41,11 +41,13 @@ app.add_middleware(
 
 
 @app.get("/health")
+@app.get("/api/health")
 def health() -> dict:
     return {"status": "ok"}
 
 
 @app.post("/predict", response_model=PredictResponse)
+@app.post("/api/predict", response_model=PredictResponse)
 def predict(payload: PredictRequest) -> PredictResponse:
     try:
         result = ml_model.predict(payload.text)
