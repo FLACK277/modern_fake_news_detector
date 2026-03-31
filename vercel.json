@@ -2,24 +2,24 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/package.json",
+      "src": "fake-news-detector/frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build"
       }
     },
     {
-      "src": "backend/app.py",
+      "src": "fake-news-detector/backend/app.py",
       "use": "@vercel/python",
       "config": {
-        "includeFiles": "backend/models/**"
+        "includeFiles": "fake-news-detector/backend/models/**"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/app.py"
+      "dest": "fake-news-detector/backend/app.py"
     },
     {
       "handle": "filesystem"

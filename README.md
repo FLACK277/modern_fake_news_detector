@@ -2,6 +2,31 @@
 
 A comprehensive fake news detection system that combines traditional machine learning and transformer models to classify news articles as fake or real with high accuracy.
 
+## Vercel Deployment (Full-Stack App)
+
+This repository includes a deployable full-stack app in `fake-news-detector/` and a root-level `vercel.json` so you can deploy directly from the repository root.
+
+### What gets deployed
+
+- Static frontend build from `fake-news-detector/frontend`
+- Python API function from `fake-news-detector/backend/app.py`
+- API routing via `/api/*` (for example `/api/predict` and `/api/health`)
+
+### Before deployment
+
+1. Confirm model artifact exists at `fake-news-detector/backend/models/prediction_model.pkl`.
+2. Verify runtime dependencies in `fake-news-detector/backend/requirements.txt`.
+3. Keep frontend calls relative to `/api` (already configured in `fake-news-detector/frontend/src/api.js`).
+
+### Deploy commands
+
+```bash
+vercel
+vercel --prod
+```
+
+The `.vercelignore` file excludes notebooks, Docker files, and cache folders to reduce upload size.
+
 ## 📊 Performance Metrics
 
 | Model | Accuracy | F1-Score | Precision | Recall | ROC-AUC |

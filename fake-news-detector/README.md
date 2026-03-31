@@ -57,11 +57,13 @@ You can generate them with the extracted training script:
 
 ```bash
 cd backend
-pip install -r requirements.txt
+pip install -r requirements-train.txt
 python train_model.py
 ```
 
 By default, `train_model.py` expects `Fake.csv` and `True.csv` in the backend directory.
+
+`requirements.txt` is optimized for deployment/runtime. Use `requirements-train.txt` when training artifacts locally.
 
 The training script exports a single pickle artifact (`prediction_model.pkl`) that encapsulates notebook-style preprocessing, TF-IDF, and ensemble classification.
 
@@ -104,6 +106,27 @@ If running frontend locally in dev mode, set `REACT_APP_API_BASE=http://localhos
 This repo includes `vercel.json` in `fake-news-detector/` so the project can be deployed as:
 - Static frontend build from `frontend/`
 - Python API function from `backend/app.py`
+
+### Before deploy
+
+1. Ensure `backend/models/prediction_model.pkl` exists in the repository.
+2. Verify backend dependencies in `backend/requirements.txt` are inference-only runtime deps.
+3. Keep frontend API calls relative (`/api/predict`) so Vercel routing works without extra env vars.
+
+### Deploy steps
+
+```bash
+cd fake-news-detector
+vercel
+```
+
+For production deploy:
+
+```bash
+vercel --prod
+```
+
+`vercel.json` already routes `/api/*` to `backend/app.py` and serves the React static build for all other routes.
 
 ### Routes
 - `POST /api/predict` → backend ML inference (`FakeNewsModel.predict`)

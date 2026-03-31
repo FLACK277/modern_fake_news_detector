@@ -16,7 +16,9 @@ class FakeNewsModel:
     """Loads a TF-IDF vectorizer and a trained classifier once at startup."""
 
     def __init__(self, model_dir: str = "models") -> None:
-        self.model_dir = Path(model_dir)
+        # Resolve model directory relative to this file so serverless runtimes
+        # can find artifacts regardless of current working directory.
+        self.model_dir = (Path(__file__).resolve().parent / model_dir).resolve()
         self.model_pipeline = None
         self.vectorizer = None
         self.classifier = None
