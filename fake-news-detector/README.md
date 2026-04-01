@@ -113,20 +113,53 @@ This repo includes `vercel.json` in `fake-news-detector/` so the project can be 
 2. Verify backend dependencies in `backend/requirements.txt` are inference-only runtime deps.
 3. Keep frontend API calls relative (`/api/predict`) so Vercel routing works without extra env vars.
 
-### Deploy steps
+### Deploy with Vercel CLI
+
+1. Install and login (one-time):
+
+```bash
+npm i -g vercel
+vercel login
+```
+
+2. Deploy preview from this folder:
 
 ```bash
 cd fake-news-detector
 vercel
 ```
 
-For production deploy:
+3. Use these CLI answers on first deploy:
+- Set up and deploy: `Y`
+- Link to existing project: choose based on whether project already exists
+- In which directory is your code located: `./`
+- Override settings: `N` (keep `vercel.json`)
+
+4. Deploy production:
 
 ```bash
 vercel --prod
 ```
 
 `vercel.json` already routes `/api/*` to `backend/app.py` and serves the React static build for all other routes.
+
+### Deploy from Vercel Dashboard
+
+1. Import this repository in Vercel.
+2. Set Root Directory to `fake-news-detector`.
+3. Keep framework/build settings as detected from `vercel.json`.
+4. Trigger deploy.
+
+### Verify after deploy
+
+- Open `/api/health` and confirm a healthy response.
+- Send a POST request to `/api/predict` with:
+
+```json
+{
+  "text": "Some news content to classify"
+}
+```
 
 ### Routes
 - `POST /api/predict` → backend ML inference (`FakeNewsModel.predict`)

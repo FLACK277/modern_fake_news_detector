@@ -12,17 +12,64 @@ This repository includes a deployable full-stack app in `fake-news-detector/` an
 - Python API function from `fake-news-detector/backend/app.py`
 - API routing via `/api/*` (for example `/api/predict` and `/api/health`)
 
-### Before deployment
+### Step-by-step deployment
 
-1. Confirm model artifact exists at `fake-news-detector/backend/models/prediction_model.pkl`.
-2. Verify runtime dependencies in `fake-news-detector/backend/requirements.txt`.
-3. Keep frontend calls relative to `/api` (already configured in `fake-news-detector/frontend/src/api.js`).
+1. Install Vercel CLI (one-time):
 
-### Deploy commands
+```bash
+npm i -g vercel
+```
+
+2. Login to Vercel:
+
+```bash
+vercel login
+```
+
+3. Confirm required model file exists:
+
+```bash
+ls fake-news-detector/backend/models/prediction_model.pkl
+```
+
+4. From repository root, run first deploy:
 
 ```bash
 vercel
+```
+
+5. When prompted by CLI, use these answers:
+- Set up and deploy: `Y`
+- Scope: choose your account/team
+- Link to existing project: `N` (or `Y` if reusing one)
+- Project name: your preferred name
+- In which directory is your code located: `./`
+- Override settings: `N` (use `vercel.json` in repo)
+
+6. Promote to production:
+
+```bash
 vercel --prod
+```
+
+### Deploy from Vercel Dashboard (alternative)
+
+1. Import GitHub repository in Vercel.
+2. Keep Root Directory as repository root.
+3. Build and output settings should remain auto-detected from `vercel.json`.
+4. Deploy.
+
+### Verify deployment
+
+After deploy, test:
+
+- `GET /api/health`
+- `POST /api/predict` with JSON body:
+
+```json
+{
+   "text": "Some news content to classify"
+}
 ```
 
 The `.vercelignore` file excludes notebooks, Docker files, and cache folders to reduce upload size.
